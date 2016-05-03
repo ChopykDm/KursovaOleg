@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var db = require('./db');
 var app = express();
 
 // view engine setup
@@ -22,8 +23,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -56,5 +58,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
+var port = process.env.PORT || 8080;        // set our port
+app.listen(port);
+console.log('Magic happens on port ' + port);
 module.exports = app;
